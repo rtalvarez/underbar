@@ -270,6 +270,7 @@ var _ = { };
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
 
+    // I dont fully understand this solution
     return !_.every(collection, function(value){
 
       return !iterator(value);
@@ -296,11 +297,39 @@ var _ = { };
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+
+    var args = Array.prototype.slice.call(arguments);
+
+    _.each(args,function(value,index,array){
+
+      _.each(args[index],function(value2,index2,array2){
+
+        obj[index2] = value2;
+
+      });
+    });
+
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+
+    var args = Array.prototype.slice.call(arguments);
+
+    _.each(args,function(value,index,array){
+
+      _.each(args[index],function(value2,index2,array2){
+
+        if (obj[index2] === undefined){
+
+          obj[index2] = value2;
+        }
+      });
+    });
+
+    return obj;
   };
 
 
