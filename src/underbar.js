@@ -167,43 +167,26 @@ var _ = { };
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
 
+
+    // invoke represents 5 hours of pain & despair, and 6 cups of coffee.
+    // I hope its not too bad
+
     if (typeof functionOrKey === 'function'){
 
-      var test = [];
+      return _.map(collection,function(value,index,array){
 
-      _.each(collection,function(value,index,array){
-
-        //console.log(functionOrKey.apply(collection[index],collection));
-        test.push(functionOrKey.apply(collection[index],collection));
-
+        return functionOrKey.apply(value,args);
       });
 
-      return test;
     }else{
 
+      return _.map(collection,function(value,index,array){
 
-      functionOrKey.apply(null,collection);
-      //console.log(collection.apply(functionOrKey,collection));
-      //console.log(collection[0].apply(functionOrKey,[collection[0]]));
+        return value[functionOrKey].apply(value,args);
+      });
 
 
     }
-
-    //console.log(typeof functionOrKey);
-    //var test = [];
-    //test[0] = functionOrKey.apply(collection[0],collection);
-    //test[1] = functionOrKey.apply(collection[1],collection);
-
-    //return test;
-    
-
-
-    //_.each(collection,function (value,index,array){
-
-    //  functionOrKey.apply(this,[value]);
-    //});
-    //return functionOrKey.apply(this,collection);
-
    
   };
 
