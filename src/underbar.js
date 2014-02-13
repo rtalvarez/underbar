@@ -168,7 +168,7 @@ var _ = { };
   _.invoke = function(collection, functionOrKey, args) {
 
 
-    // invoke represents 5 hours of pain & despair, and 6 cups of coffee.
+    // invoke represents 5 hours of pain & despair, and 6+ cups of coffee.
     // I hope its not too bad
 
     if (typeof functionOrKey === 'function'){
@@ -204,6 +204,22 @@ var _ = { };
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+
+    if (accumulator === undefined && Array.isArray(collection)){
+
+      accumulator = collection[0];
+    }
+    else if (accumulator === undefined && !Array.isArray(collection)){
+
+      accumulator = collection[Object.keys(collection)[0]];
+    }
+
+    _.each(collection,function(value,index,array){
+
+      accumulator = iterator(accumulator,value);
+    });
+
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
