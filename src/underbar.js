@@ -239,17 +239,28 @@ var _ = { };
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
 
+    
+    iterator = iterator || _.identity;
 
-    // TODO: handles callbacks that do work on the input
-    console.log(iterator);
-    if (iterator === undefined){
+    var result = true;
 
-      iterator = _.identity;
-    }
+    _.each(collection,function(value,index,array){
+
+      if (!iterator(value)){
+
+        result = false;
+      }
+    });
+
+    return result;
+
+    // Try 2
+    // NOT WORKING: handles callbacks that do work on the input
 
     return _.reduce(collection,function(start,memo){
 
       return iterator(start) && iterator(memo) ? true : false;
+      
     },true);
 
   };
@@ -258,6 +269,11 @@ var _ = { };
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+
+    return !_.every(collection, function(value){
+
+      return !iterator(value);
+    });
   };
 
 
