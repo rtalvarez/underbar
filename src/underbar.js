@@ -271,6 +271,9 @@ var _ = { };
     // TIP: There's a very clever way to re-use every() here.
 
     // I dont fully understand this solution
+
+    iterator = iterator || _.identity;
+
     return !_.every(collection, function(value){
 
       return !iterator(value);
